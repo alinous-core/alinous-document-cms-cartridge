@@ -33,6 +33,10 @@ include("/include/sitesetting.alns");
 include("/include/httpheader.alns");
 
 
+if(Sql.TableExists("pgsrc" ,"serial")){
+	return 0;
+}
+
 BEGIN;
 
 systemDdl();
