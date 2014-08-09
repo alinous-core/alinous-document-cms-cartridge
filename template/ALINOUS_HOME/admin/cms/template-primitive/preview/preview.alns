@@ -26,6 +26,7 @@ for($i = 0; $i < Array.size(@values); $i++){
 	Script.evaluate($script);
 }
 
+$params.page = 0;
 $file = Publish.previewPrimitive($SESSION, $template_primitive[0].template_primitive_id, $params);
 
 

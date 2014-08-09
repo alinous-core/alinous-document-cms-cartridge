@@ -155,6 +155,11 @@ $(function() {
 	});
 	$("input[name='updated_time_time']").timepicker({ 'timeFormat': 'H:i' });
 	
+	
+	$("input[name='page_type']").autocomplete({
+		source: "/admin/cms/article/autocomplete/pagetype.alns",
+		minLength: 0	
+	});
 });
 
 function firstNode()
@@ -223,9 +228,9 @@ function firstNode()
 				<input type="hidden" name="selectedNodeId" id="selectedNodeId" value="{$IN.selectedNodeId}" />				
 			</form>
 		</div>
-		<div style="display:none;">
+		<div>
 			<form name="firstfrm" action="index.html" method="POST">
-				<center><button type="button" onclick="firstNode()">Create a new Website.</button></center>
+				<center alns:if="{BOOL($size_tree_model = 0)}"><button type="button" onclick="firstNode()">Create a new Website.</button></center>
 				<input type="hidden" name="cmd" value="" />
 				
 				<input type="hidden" id="nodeCode" name="nodeCode" value="" />

@@ -21,7 +21,13 @@ if($IN.cmd == "backup"){
 	download $zipFile, "backup" + $FILE_DATE + ".zip";
 }
 else if($IN.cmd == "recover"){
-	recover($IN, $SESSION);
+	$tmpFile = "/tmp/" + $SESSION + "_" + $IN.file;
+	$outDir = "/tmp/" + $SESSION + "_recover/";
+	
+	recover($tmpFile, $outDir);
+	
+	File.remove($tmpFile);
+	File.remove($outDir);
 }
 
 return 0;
@@ -123,11 +129,8 @@ function backupContents($IN, $SESSION, $backupDir, $tableName)
 	SQL.backup("pgapps", $tableName, $backupFile);	
 }
 
-function recover($IN, $SESSION)
+function recover($tmpFile, $outDir)
 {
-	$tmpFile = "/tmp/" + $SESSION + "_" + $IN.file;
-	$outDir = "/tmp/" + $SESSION + "_recover/";
-	
 	Zip.extract($tmpFile, $outDir);
 	
 	// install.alns
@@ -205,26 +208,34 @@ function recover($IN, $SESSION)
 	recoverTable($outDir, "wic_user_motion");
 	recoverTable($outDir, "wic_user_motion_archive");
 	
-	File.remove($tmpFile);
-	File.remove($outDir);
+	resetDir("/log/sites");
+	resetDir("html");
+	resetDir("html_preview");
+	resetDir("html_resource");
+	resetDir("html_tmpl");
 	
 	// sync Images
 	ImgResource.syncAll();
 	
-	SELECT template_top.template_top_id INTO template_top
-	FROM
-		template_top;
-	for($i = 0; $i < Array.size(@template_top); $i++){
-		TopTmpl.sync($template_top[$i].template_top_id, "");
-	}
-	
+	// forward and redirect
 	SiteSetting.sync();
 	Redirects.sync(null);
 	
+	// sitemap, rss and robots txt
 	Sitefiles.syncAll();
 	Rss.publishAll();
 	
+	PrimitiveTmpl.syncAll();
+	ContainerTmpl.syncAll();
+	TopTmpl.syncAll();
+	
 	return 0;
+}
+
+function resetDir($dir)
+{
+	File.remove($dir);
+	File.makeDir($dir);
 }
 
 function recoverTable($outDir, $TABLE_NAME)

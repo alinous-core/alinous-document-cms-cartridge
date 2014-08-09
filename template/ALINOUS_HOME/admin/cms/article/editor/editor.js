@@ -1,10 +1,5 @@
 
 
-$(function() {
-
-
-	
-});
 
 var niceditor = null;
 function activateNicedit()

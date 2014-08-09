@@ -27,7 +27,7 @@ for($i = 0; $i < Array.size(@values); $i++){
 	Script.evaluate($script);
 }
 
-
+$params.page = 0;
 $publishedFile = Publish.previewContainer($SESSION, $template_container[0].template_container_id, $params);
 
 $paramStr = "?";

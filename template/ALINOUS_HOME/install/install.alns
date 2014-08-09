@@ -16,6 +16,23 @@ include("/install/interestddl.alns");
 include("/install/useractonddl.alns");
 
 
+// recover
+include("/admin/backup/index.alns");
+
+include("/include/imageresource.alns");
+include("/include/pathutils.alns");
+
+include("/include/template_top.alns");
+include("/include/template_container.alns");
+include("/include/template_primitive.alns");
+
+include("/include/rss.alns");
+include("/include/sitefiles.alns");
+include("/include/sitesetting.alns");
+
+include("/include/httpheader.alns");
+
+
 BEGIN;
 
 systemDdl();
@@ -43,6 +60,11 @@ WebActions.ddl();
 Heatmap.ddl();
 
 COMMIT;
+
+$outDir = "/tmp/" + $SESSION + "_recover/";
+recover("/install/data/default.zip", $outDir);
+
+File.remove($outDir);
 
 return 0;
 

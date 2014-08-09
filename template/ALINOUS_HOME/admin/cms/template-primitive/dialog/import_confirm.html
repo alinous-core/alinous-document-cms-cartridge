@@ -20,10 +20,10 @@ function submitImportConfirm(form)
 		contentType: false,
 		data: fd,
 		dataType: 'html',
-		success: function(data) {
-			$( "#dialog" ).dialog( "close" );
+		success: function(data) {			
+			document.partsFrm.submit();
 			
-			document.frm.submit();
+			$( "#dialog" ).dialog( "close" );
 		},
 		error:function() {
 			alert('Error occur');

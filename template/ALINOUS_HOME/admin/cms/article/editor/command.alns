@@ -29,9 +29,12 @@ function Editor.exexuteCommand($IN, $SESSION)
 		
 		$sync = parallel(1){
 			$site = SiteSetting.getSiteFromNodeId($IN.selectedNodeId);
-			SiteSetting.generateSitemap($site);
-			Rss.publishAll();
-			Rss.pubhubPushAll();
+			
+			if($IN.update_tm == 1){
+				SiteSetting.generateSitemap($site);
+				Rss.publishAll();
+				Rss.pubhubPushAll();
+			}
 			
 			Editor.makeDirty($IN.selectedNodeId, $IN.effect_range);
 		};

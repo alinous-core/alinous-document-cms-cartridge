@@ -106,11 +106,25 @@ var TreeTableWrapper = {
 			td += path;
 			td += "</td>";
 			td += "<td>";
-			td += value;
+			td += checkValue(value);
 			td += "</td>";
 			
 			return td;
-		};		
+		};
+		
+		var checkValue = function (value)
+		{
+			var len = value.length;
+			if(len > 100){
+				value = value.substring(0, 100);
+			}
+			
+			value = value.replace(/</g, "&lt;");
+			value = value.replace(/>/g, "&gt;");
+			
+			return value;
+		};
+		
 	},
 	
 	initNode : function(thisNode, nodeId, level, treeId)
