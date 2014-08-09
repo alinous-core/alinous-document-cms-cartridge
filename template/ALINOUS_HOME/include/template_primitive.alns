@@ -3,6 +3,20 @@
 include("/include/template_primitive.alns");
 */
 
+function PrimitiveTmpl.syncAll()
+{
+	SELECT template_primitive.template_primitive_id INTO template_primitive
+	FROM
+		template_primitive;
+	
+	$size = Array.size(@template_primitive);
+	for($i = 0; $i < Array.size(@template_primitive); $i++){
+		PrimitiveTmpl.sync($template_primitive[$i].template_primitive_id, "preview");
+		PrimitiveTmpl.sync($template_primitive[$i].template_primitive_id, "");
+	}
+	
+}
+
 
 function PrimitiveTmpl.sync($template_primitive_id, $genCode)
 {

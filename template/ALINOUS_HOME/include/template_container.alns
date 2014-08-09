@@ -4,6 +4,20 @@ include("/include/template_container.alns");
 */
 include("/include/template_primitive.alns");
 
+function ContainerTmpl.syncAll()
+{
+	SELECT template_container.template_container_id INTO template_container
+	FROM
+		template_container;
+	
+	$size = Array.size(@template_container);
+	for($i = 0; $i < $size; $i++){
+		ContainerTmpl.sync($template_container[$i].template_container_id, "preview");
+		ContainerTmpl.sync($template_container[$i].template_container_id, "");
+	}
+	
+}
+
 function ContainerTmpl.sync($template_container_id, $gencode)
 {
 	$tmpl = ContainerTmpl.getTemplate($template_container_id);

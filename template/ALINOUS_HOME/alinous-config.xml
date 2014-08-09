@@ -16,5 +16,31 @@
 		<user>admin2krivyc</user>
 		<pass>ACedWgUqZXe-</pass>
 	</datasources>
+
+	<basic-auth>
+		<relm>
+			<datastore>pgsrc</datastore>
+			<table>AUTH_TABLE</table>
+			<users>USERS</users>
+			<passwords>PASSWORDS</passwords>
+			<roles>ROLES</roles>
+		</relm>
+		
+		<zones>
+			<zone>
+				<area>/admin/</area>
+				<roles>user</roles>
+				<form-auth>
+					<login>/admin/login.html</login>
+					<confirm>/admin/confirm.html</confirm>
+				</form-auth>
+			</zone>
+		</zones>
+	</basic-auth>
 	
+	<service-filter>
+		<filter-class>org.alinous.cms.filter.CmsFilter</filter-class>
+		<params>
+		</params>
+	</service-filter> 
 </alinous-config>

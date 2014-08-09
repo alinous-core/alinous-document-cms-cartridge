@@ -18,6 +18,8 @@ function Sitefiles.syncAll()
 function Sitefiles.sync($site_resource_id)
 {
 	$path = Sitefiles.getPathFromFile($site_resource_id);
+	$dir = File.getDirectory($path);
+	File.makeDir($dir);
 	
 	SELECT * INTO site_resource
 	FROM

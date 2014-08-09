@@ -6,6 +6,20 @@ include("/include/template_top.alns");
 include("/include/template_container.alns");
 include("/include/template_primitive.alns");
 
+function TopTmpl.syncAll()
+{
+	SELECT template_top.template_top_id INTO template_top
+	FROM
+		template_top;
+	
+	$size = Array.size(@template_top);
+	for($i = 0; $i < Array.size(@template_top); $i++){
+		TopTmpl.sync($template_top[$i].template_top_id, "preview");
+		TopTmpl.sync($template_top[$i].template_top_id, "");
+	}
+		
+}
+
 function TopTmpl.sync($template_top_id, $gencode)
 {
 	$tmpl = TopTmpl.getTemplate($template_top_id);

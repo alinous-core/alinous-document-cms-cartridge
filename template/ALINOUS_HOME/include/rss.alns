@@ -17,6 +17,8 @@ function Rss.publish($rss_setting_id)
 {
 	$url = Rss.getFilePath($rss_setting_id);
 	$outPath = "/html" +$url;
+	$dir = File.getDirectory($outPath);
+	File.makeDir($dir);
 	
 	$httpParams.rss_setting_id = $rss_setting_id;
 	$templetePath = "/admin/cms/rss-sitemap/rss-template/rsstemplate.rss";
