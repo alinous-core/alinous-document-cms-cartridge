@@ -68,7 +68,8 @@ function start() {
     SHELL_DIR=${OPENSHIFT_ALINOUS_DIR}tomcat/bin
 
     ${SHELL_DIR}/startup.sh > ${OPENSHIFT_ALINOUS_DIR}logs/tomcat.log 2>&1 &
-
+    
+    sleep 3
     curl -k -X GET http://${OPENSHIFT_ALINOUS_IP}:${OPENSHIFT_ALINOUS_HTTP_PORT}/install/install.html
 }
 
