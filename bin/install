@@ -55,5 +55,7 @@ cp -Rf ${TEMPLATE_PATH}/ALINOUS_HOME/* ${ALINOUS_HOME}
 mkdir -p "${OPENSHIFT_ALINOUS_DIR}run/";
 mkdir -p "${OPENSHIFT_ALINOUS_DIR}logs/";
 
+curl -k -X GET http://${OPENSHIFT_ALINOUS_IP}:${OPENSHIFT_ALINOUS_HTTP_PORT}/install/install.html
+
 
 
