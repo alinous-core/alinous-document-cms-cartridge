@@ -1,0 +1,154 @@
+#!/bin/bash
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+STOPTIMEOUT=10
+FMT="%a %b %d %Y %H:%M:%S GMT%z (%Z)"
+
+ALINOUS_PID_FILE="${OPENSHIFT_ALINOUS_DIR}run/alinous.pid"
+
+# Kill the process given by $1 and its children
+killtree() {
+    local _pid=$1
+
+    client_message "killing ${_pid}";
+
+    for _child in $(ps -o pid --no-headers --ppid ${_pid}); do
+        killtree ${_child}
+    done
+    echo kill -9 ${_pid}
+    kill -9 ${_pid}
+}
+
+function status() {
+    if ! isrunning; then
+        client_result "The application is either stopped or inaccessible"
+        exit 0
+    fi
+
+    client_result tailing "${OPENSHIFT_ALINOUS_DIR}tomcat/logs/catalina.out"
+    client_result "------ Tail of Tomcat catalina.out ------"
+    client_result $(tail "${OPENSHIFT_ALINOUS_DIR}tomcat/logs/catalina.out")
+    
+}
+
+# Check if the tomcatas process is running
+function isrunning() {
+    # Check for running app
+    if [ -f "$ALINOUS_PID_FILE" ]; then
+      jbpid=$(cat $ALINOUS_PID_FILE);
+      running=`/bin/ps --no-headers --pid $jbpid`
+      if test -n "$running";
+      then
+        return 0
+      fi
+    fi
+    # not running
+    return 1
+}
+
+function checkRunning() {
+    jbpid=$1;
+    running=`/bin/ps --no-headers --pid $jbpid`
+    if test -n "$running";
+    then
+         return 0
+    fi
+
+    return 1
+}
+
+
+function start() {
+    
+    ${OPENSHIFT_ALINOUS_DIR}/bin/initdb
+    
+    client_message "Start tomcat and alinous server";
+    
+    SHELL_DIR=${OPENSHIFT_ALINOUS_DIR}tomcat/bin
+
+    ${SHELL_DIR}/startup.sh > ${OPENSHIFT_ALINOUS_DIR}logs/tomcat.log 2>&1 &
+
+}
+
+function stop() {
+    client_message "Stop tomcat and alinous server";
+    if ! isrunning; then
+        echo "The alinous cartridge is already stopped" 1>&2
+    elif [ -f "$ALINOUS_PID_FILE" ]; then
+        pid=$(cat $ALINOUS_PID_FILE);
+        echo "Sending SIGTERM to tomcat:$pid ..." 1>&2
+        killtree $pid
+	
+        running=$(checkRunning $pid)
+	while [ $running ]
+	do
+		client_message "waiting for $pid to stop, now [$running]"
+		sleep 1
+		running=$(checkRunning $pid)
+	done
+    else 
+        echo "Failed to locate ALINOUS PID File" 1>&2
+    fi
+}
+
+function restart() {
+    client_message "Restart tomcat and alinous server";
+    stop
+    client_message "Start tomcat and alinous server";
+    start
+}
+
+function build() {
+     ${OPENSHIFT_ALINOUS_DIR}/bin/build
+}
+
+function deploy() {
+     ${OPENSHIFT_ALINOUS_DIR}/bin/deploy
+}
+
+function post-deploy() {
+    client_message "post-deploy....."
+}
+
+function pre-build() {
+    client_message "pre-build....."
+}
+
+function tidy() {
+    client_message "Emptying log dir: $OPENSHIFT_ALINOUS_DIR/log"
+}
+
+#
+#  main():
+#
+
+# Ensure arguments.
+if ! [ $# -eq 1 ]; then
+    echo "Usage: $0 [start|restart|graceful|graceful-stop|stop|status]"
+    exit 1
+fi
+
+# Source utility functions.
+# source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+# Handle commands.
+case "$1" in
+    start)               start       ;;
+    restart|graceful)
+	restart
+	exit 0
+    ;;
+    graceful-stop|stop)  stop        ;;
+    status)              
+	status
+	exit 0
+    ;;
+    build)               build       ;;
+    deploy)              deploy      ;;
+    pre-build)           pre-build   ;;
+    post-deploy)         post-deploy ;;
+    tidy)                tidy        ;;
+    *) exit 0;
+esac
+

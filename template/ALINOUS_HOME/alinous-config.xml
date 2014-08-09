@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<alinous-config>
+	<system>
+		<system-datastore id="pgsrc" />
+		<default-datastore id="pgapps" />
+	</system>
+
+	<datasources id="pgsrc" class="org.alinous.plugin.postgres.PostgreSQLDataSource">
+		<connect>java:comp/env/jdbc/PostgreSQLDS</connect>
+		<user>admin2krivyc</user>
+		<pass>ACedWgUqZXe-</pass>
+	</datasources>
+
+	<datasources id="pgapps" class="org.alinous.plugin.postgres.PostgreSQLDataSource">
+		<connect>java:comp/env/jdbc/PostgreSQLDS</connect>
+		<user>admin2krivyc</user>
+		<pass>ACedWgUqZXe-</pass>
+	</datasources>
+	
+</alinous-config>

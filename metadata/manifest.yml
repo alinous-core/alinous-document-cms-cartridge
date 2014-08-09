@@ -1,0 +1,56 @@
+Name: alinous
+Cartridge-Short-Name: ALINOUS
+Cartridge-Version: 1.0.1
+Cartridge-Vendor: tomohiro_iizuka
+Display-Name: Alinous-Core Cartridge for Openshift
+Version: 1.0
+Source-Url: https://github.com/alinous-core/alinous-cartridge/archive/master.zip
+Categories:
+  - service
+  - web_framework
+  - java
+  - tomcat
+Website: http://alinous.org
+Provides:
+  - alinous
+Scaling:
+  Min: 1
+  Max: 1
+Publishes:
+  get-internal-uri:
+    Type: "NET_TCP:http"
+  publish-http-url:
+    Type: "NET_TCP:httpd-proxy-info"
+  publish-gear-endpoint:
+    Type: "NET_TCP:gear-endpoint-info"
+Subscribes:
+  set-db-connection-info:
+    Type: "NET_TCP:db:connection-info"
+    Required: false
+  set-nosql-db-connection-info:
+    Type: "NET_TCP:nosqldb:connection-info"
+    Required: false
+  set-jdbc-info:
+    Type: "NET_TCP:jdbc"
+Group-Overrides:
+  - components:
+    - "tomcat-8.0"
+    - web_proxy
+Endpoints:
+  - Private-IP-Name:   IP
+    Private-Port-Name: HTTP_PORT
+    Private-Port:      8080
+    Public-Port-Name:  HTTP_PROXY_PORT
+    Mappings:
+      - Frontend:      ""
+        Backend:       ""
+        Options:       { "websocket": 1}
+      - Frontend:      "/health"
+        Backend:       "/$OPENSHIFT_REPO_DIR/.openshift/configuration/health.html"
+        Options:       { "file": 1}
+  - Private-IP-Name:   IP
+    Private-Port-Name: JPDA_PORT
+    Private-Port:      8787
+Requires:
+  - postgresql-9.2
+

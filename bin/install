@@ -1,0 +1,59 @@
+#!/bin/bash
+
+set -e
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+source ${OPENSHIFT_ALINOUS_DIR}/bin/util
+
+export TOMCAT_DIR=${OPENSHIFT_ALINOUS_DIR}tomcat
+export ALINOUS_HOME=${OPENSHIFT_ALINOUS_DIR}ALINOUS_HOME
+
+SRC_PATH=${OPENSHIFT_ALINOUS_DIR}versions/${TOMCAT_BINARY}
+SRC_CONFIG_PATH=${OPENSHIFT_ALINOUS_DIR}versions/${TOMCAT_BINARY}
+
+client_message "Start Installing Alinous-Core Cartridge $ALINOUS_HOME"
+client_message "Copy $SRC_PATH to $TOMCAT_DIR"
+
+echo `env` > ${OPENSHIFT_ALINOUS_DIR}message.txt
+
+
+if [ ! -d $TOMCAT_DIR ]; then
+	mkdir -p $TOMCAT_DIR
+	mkdir -p $TOMCAT_DIR/logs
+	mkdir -p $TOMCAT_DIR/temp
+	mkdir -p $TOMCAT_DIR/webapps
+	mkdir -p $TOMCAT_DIR/work
+fi
+
+cp -Rf ${SRC_PATH}/* ${TOMCAT_DIR}
+
+sed_replace_env=$(print_sed_exp_replace_env_var)
+replacement_conf_files=(
+  "server.xml"
+  "context.xml"
+)
+
+for conf_file in "${replacement_conf_files[@]}"; do
+  sed ${sed_replace_env} ${SRC_CONFIG_PATH}/conf/${conf_file} > ${TOMCAT_DIR}/conf/${conf_file}
+done
+
+replacement_conf_files=(
+  "setenv.sh"
+)
+
+for conf_file in "${replacement_conf_files[@]}"; do
+  sed ${sed_replace_env} ${SRC_CONFIG_PATH}/bin/${conf_file} > ${TOMCAT_DIR}/bin/${conf_file}
+done
+
+
+mkdir -p $ALINOUS_HOME;
+
+TEMPLATE_PATH=${OPENSHIFT_ALINOUS_DIR}template
+
+cp -Rf ${TEMPLATE_PATH}/ALINOUS_HOME/* ${ALINOUS_HOME}
+
+mkdir -p "${OPENSHIFT_ALINOUS_DIR}run/";
+mkdir -p "${OPENSHIFT_ALINOUS_DIR}logs/";
+
+
+

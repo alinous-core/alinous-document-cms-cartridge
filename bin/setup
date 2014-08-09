@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+set -u
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+export OPENSHIFT_TOMCAT_DIR=${OPENSHIFT_HOMEDIR}tomcat
+
+client_message "Start Installing Tomcat $OPENSHIFT_ALINOUS_DIR"
+
+
+

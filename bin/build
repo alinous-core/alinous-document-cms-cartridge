@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+client_message "building....."
+
+exit 0

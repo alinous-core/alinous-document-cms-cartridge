@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+client_message "deploy.....　$OPENSHIFT_REPO_DIR"
+
+cp -rf ${OPENSHIFT_REPO_DIR}ALINOUS_HOME/* ${OPENSHIFT_ALINOUS_DIR}ALINOUS_HOME/
+
+exit 0
+
