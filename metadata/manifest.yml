@@ -1,8 +1,8 @@
-Name: alinous
+Name: alinouscms
 Cartridge-Short-Name: ALINOUS
 Cartridge-Version: 1.0.1
 Cartridge-Vendor: tomohiro_iizuka
-Display-Name: Alinous-Core Cartridge for Openshift
+Display-Name: Alinous Document Cms Cartridge for Openshift
 Version: 1.0
 Source-Url: https://github.com/alinous-core/alinous-cartridge/archive/master.zip
 Categories:
@@ -34,7 +34,7 @@ Subscribes:
     Type: "NET_TCP:jdbc"
 Group-Overrides:
   - components:
-    - "tomcat-8.0"
+    - "tomcat-7.0"
     - web_proxy
 Endpoints:
   - Private-IP-Name:   IP
