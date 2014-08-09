@@ -1,0 +1,10 @@
+
+SELECT * INTO hm_scroll_hm
+FROM
+	hm_scroll_hm
+WHERE
+	hm_scroll_hm.hm_scroll_hm_id = $IN.hm_scroll_hm_id;
+
+$json = Record.dom2json(@hm_scroll_hm);
+
+return $json;

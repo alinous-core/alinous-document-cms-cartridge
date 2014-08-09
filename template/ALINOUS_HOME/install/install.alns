@@ -1,0 +1,66 @@
+
+include("/install/page.alns");
+include("/install/template.alns");
+include("/install/resources.alns");
+include("/install/tags.alns");
+include("/install/httpheader.alns");
+include("/install/content-importer.alns");
+include("/install/debugger.alns");
+include("/install/site.alns");
+
+include("/install/webmasterchecker.alns");
+
+include("/install/archiveddl.alns");
+include("/install/heatmapddl.alns");
+include("/install/interestddl.alns");
+include("/install/useractonddl.alns");
+
+
+BEGIN;
+
+systemDdl();
+
+COMMIT;
+
+PageTree.ddl();
+PageTemplates.ddl();
+PageResource.ddl();
+Tags.ddl();
+HttpHeader.ddl();
+ContentImporter.ddl();
+Debugger.ddl();
+Site.ddl();
+
+BEGIN;
+WmcContentKeywords.ddl();
+COMMIT;
+
+BEGIN;
+
+WebArchive.ddl();
+WebInterest.ddl();
+WebActions.ddl();
+Heatmap.ddl();
+
+COMMIT;
+
+return 0;
+
+function systemDdl()
+{
+	CREATE TABLE serial(
+		serial_id varchar(32),
+		number int,
+		primary key(serial_id)
+	);
+	
+	CREATE TABLE job_progress(
+		job_id varchar(128),
+		job_done int default 0,
+		job_max int default 0,
+	
+		primary key(job_id)
+	);
+	
+	INSERT INTO auth_table(users,passwords,roles) VALUES('admin','admin','admin');
+}

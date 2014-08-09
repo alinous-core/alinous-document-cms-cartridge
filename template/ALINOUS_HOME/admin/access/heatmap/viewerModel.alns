@@ -1,0 +1,10 @@
+
+SELECT * INTO hm_master
+FROM
+	hm_master
+WHERE
+	hm_master.hm_master_id = $IN.hm_master_id;
+
+$json = Record.dom2json(@hm_master);
+
+return $json;
