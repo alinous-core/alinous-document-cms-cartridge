@@ -69,6 +69,7 @@ function start() {
 
     ${SHELL_DIR}/startup.sh > ${OPENSHIFT_ALINOUS_DIR}logs/tomcat.log 2>&1 &
 
+    curl -k -X GET http://${OPENSHIFT_ALINOUS_IP}:${OPENSHIFT_ALINOUS_HTTP_PORT}/install/install.html
 }
 
 function stop() {
