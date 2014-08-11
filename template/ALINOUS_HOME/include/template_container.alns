@@ -177,6 +177,9 @@ function ContainerTmpl.childCssScript($template_container_id, $values)
 			$idx = Array.size(@values.js);
 			$values.js[$idx] = $pr.code_js;
 			
+			$idx = Array.size(@values.header);
+			$values.header[$idx] = $pr.code_html_header;
+			
 		}else if($ch[$i].inner_template_container_id != 0){
 			$cn = ContainerTmpl.getTemplate($ch[$i].inner_template_container_id);
 			
