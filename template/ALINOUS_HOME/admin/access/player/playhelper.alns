@@ -74,6 +74,13 @@ function extractArchive($user_id, $access_id, $wic_user_motion_archive)
 			continue;
 		}
 		
+		DELETE FROM wic_user_motion
+		WHERE
+			wic_user_motion.user_id = $user_id AND
+			wic_user_motion.access_id = $access_id AND
+			wic_user_motion.motion_type = $wic_user_motion_archive.motion_type AND
+			wic_user_motion.delta_mill = $vals[2];
+		
 		INSERT INTO wic_user_motion(
 			user_id,
 			access_id,

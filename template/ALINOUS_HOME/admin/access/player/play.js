@@ -122,6 +122,11 @@ var AlinousPlayer = {
 		
 		var mouseMove = function(x, y)
 		{
+			// canter
+			var xdiff = 128 / 2;
+			var ydiff = 128 / 2;
+			
+			//
 			var scrollTop =
 				document.documentElement.scrollTop || // IE、Firefox、Opera
 				document.body.scrollTop;              // Chrome、Safari
@@ -129,8 +134,8 @@ var AlinousPlayer = {
 				document.documentElement.scrollLeft || // IE、Firefox、Opera
 				document.body.scrollLeft;              // Chrome、Safari
 			
-			var clientX = parseInt(x, 10) - scrollLeft;
-			var clientY = parseInt(y, 10) - scrollTop;
+			var clientX = parseInt(x, 10) - scrollLeft - xdiff;
+			var clientY = parseInt(y, 10) - scrollTop - ydiff;
 			
 			// save document position
 			lastMousePosition.x = x;

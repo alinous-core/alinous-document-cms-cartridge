@@ -165,6 +165,14 @@ var AlinousJsTools = {
 			};
 
 			clickBuffers[clickBufferIdx].push(record);
+			
+			
+			flushClickEvents();
+			flushScrollEvents();
+			flushMouseMoveEvents();
+			flushResizeEvents();
+			
+			// alert("flushed");
 		};
 	 	
 	 	var fireScrolled = function(event)
