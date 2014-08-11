@@ -254,6 +254,9 @@ button {
 					<th>
 						Domain Name
 					</th>
+					<th width="220">
+						Force https
+					</th>
 					<th>
 						Template Setting
 					</th>
@@ -265,6 +268,10 @@ button {
 				<tr alns:iterate="@site_setting" alns:variable="site">
 					<td>
 						{$site.site_domain}
+					</td>
+					<td>
+						<span alns:if="{BOOL($site.force_https == 0)}">Use Http and Https</span>
+						<span alns:if="{BOOL($site.force_https == 1)}">Redirect Http to Https</span>
 					</td>
 					<td>
 						<span alns:if="{BOOL($site.template_use == 0)}">Use Default Template</span>
@@ -288,6 +295,12 @@ button {
 				<tr>
 					<td>
 						<input type="text" name="site_domain" value="" style="width:100%;"/>
+					</td>
+					<td>
+						<select name="force_https">
+						<option value="0">Use Http and Https</option>
+						<option value="1">Redirect Http to Https</option>
+						</select>
 					</td>
 					<td>
 						<select name="template_use" onchange="siteTemplateChange(this.form)">

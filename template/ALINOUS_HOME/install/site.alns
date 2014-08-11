@@ -13,6 +13,8 @@ function Site.ddl()
 		template_use int not null default 0,
 		use_context int not null default 0,
 		
+		force_https int not null default 0,
+		
 		PRIMARY KEY(site_path, site_domain, template_use)
 	);
 	

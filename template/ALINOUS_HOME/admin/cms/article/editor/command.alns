@@ -58,6 +58,7 @@ function Editor.exexuteCommand($IN, $SESSION)
 	}
 	else if($IN.cmd == "site.newDomain"){
 		newDomain($IN, $SESSION);
+		SiteSetting.sync();
 		return "/admin/cms/article/index.html?selectedNodeId=" + $IN.selectedNodeId;
 	}
 	else if($IN.cmd == "site.removeDomain"){
@@ -126,13 +127,15 @@ function newDomain($IN, $SESSION)
 		site_path,
 		site_domain,
 		template_use,
-		use_context
+		use_context,
+		force_https
 	)
 	VALUES(
 		$node.page_path, // site_path,
 		$IN.site_domain,
 		$IN.template_use,
-		$IN.use_context
+		$IN.use_context,
+		$IN.force_https
 	);	
 	
 	COMMIT;

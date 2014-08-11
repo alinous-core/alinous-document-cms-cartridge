@@ -44,6 +44,10 @@ function SiteSetting.sync()
 			+  $site_setting[$i].site_path
 			+ ","
 			+  $site_setting[$i].template_use
+			+ ","
+			+  $site_setting[$i].use_context
+			+ ","
+			+  $site_setting[$i].force_https
 			+ "\n";	
 		
 		$text = $text + $line;
