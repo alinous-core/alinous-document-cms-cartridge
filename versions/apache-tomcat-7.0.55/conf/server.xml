@@ -45,7 +45,8 @@
               factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
               pathname="conf/tomcat-users.xml" />
   </GlobalNamingResources>
-
+  <Valve className="org.apache.catalina.valves.RemoteIpValve"
+        protocolHeader="x-forwarded-proto"></Valve>
   <!-- A "Service" is a collection of one or more "Connectors" that share
        a single "Container" Note:  A "Service" is not itself a "Container",
        so you may not define subcomponents such as "Valves" at this level.
