@@ -138,7 +138,7 @@
                prefix="localhost_access_log." suffix=".txt"
                pattern="combined" />
         <Valve className="org.apache.catalina.valves.RemoteIpValve"
-              protocolHeader="x-forwarded-proto"></Valve>
+              protocolHeader="x-forwarded-proto" httpsServerPort="443"></Valve>
       </Host>
     </Engine>
   </Service>
