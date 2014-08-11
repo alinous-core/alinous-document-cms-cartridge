@@ -18,6 +18,13 @@
 <script type="text/javascript"> 
 <!--//
 
+function reload(form)
+{
+	form.page.value = 0;
+	form.cmd.value = "";
+	form.submit();
+}
+
 function gotoPage(form, page)
 {
 	form.page.value = page;
@@ -26,6 +33,7 @@ function gotoPage(form, page)
 }
 
 $(function() {
+	$("button").button();
 	$(".pageNavi a").button();
 	$(".playbtn").button();
 });
@@ -39,14 +47,14 @@ $(function() {
 
 <div id="wrap">
 
-<h1><a href="/admin/">Programmable CMS</a> &gt; Access Recorder</h1>
+<h1><a href="/admin/">Document CMS</a> &gt; Access Recorder</h1>
 
 <h2>Play recorded motion</h2>
 
 
 <form name="frm" action="index.html" method="POST">
 
-
+<button type="button" onclick="reload(this.form)">Reload</button>
 
 <input type="hidden" name="page" value="{$IN.page}" />
 <input type="hidden" name="cmd" value="" />

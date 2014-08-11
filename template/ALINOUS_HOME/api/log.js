@@ -1,6 +1,6 @@
 
 var AlinousJsTools = {
-	loggerUrl : "http://localhost:8080/api/ac.alns",
+	loggerUrl : "/api/ac.alns",
 	
 	debugMode : false,
 	firstSpan : 2000,
@@ -54,7 +54,7 @@ var AlinousJsTools = {
 		{
 			var cookies = getCookies(document);
 			var accessserial = "";
-			if(cookies.alinous_access_log){
+			if(cookies != null && cookies.alinous_access_log){
 				accessserial = cookies.alinous_access_log;
 			}
 			

@@ -3,8 +3,8 @@ include("/include/paging.alns");
 
 initParams($IN, $SESSION);
 
-$maxPagingNumberScroll = 20;
-$limit = 20;
+$maxPagingNumberScroll = 10;
+$limit = 10;
 $pageNumber = $IN.page;
 
 @pageAccesses = getRecords($IN, $SESSION, $limit);

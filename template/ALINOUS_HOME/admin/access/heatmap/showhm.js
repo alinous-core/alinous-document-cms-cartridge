@@ -3,6 +3,30 @@ var AlinousHmViewer = {
 	hm_master_id: 0,
 	playWindow: null,
 	show : function(hm_master_id){
+	
+		var getBrowserHeight = function () {
+			if(window.innerHeight){
+				return window.innerHeight;
+			}else if(document.documentElement && document.documentElement.clientHeight != 0 ){
+				return document.documentElement.clientHeight;
+			}else if (document.body){
+				return document.body.clientHeight;
+			}		
+			return 0;
+		};
+		
+		var getBrowserWidth = function () {
+			if(window.innerWidth ){
+				return window.innerWidth ;
+			}else if(document.documentElement && document.documentElement.clientWidth  != 0 ){
+				return document.documentElement.clientWidth ;
+			}else if (document.body){
+				return document.body.clientWidth ;
+			}		
+			return 0;
+		};
+		
+	
 		var data = {hm_master_id: hm_master_id};
 		
 		$.ajax({
@@ -14,9 +38,16 @@ var AlinousHmViewer = {
 			success: function(json)
 			{
 		    	var val = json[0];
+			    
+			    var winWidth = getBrowserWidth();
+			    
+		    	val.window_width = val.imageWidth;
+		    	val.window_height = getBrowserHeight();;
 		    	
-		    	val.window_width = 800;
-		    	val.window_height = 600;
+		    	if(val.window_width > winWidth){
+		    		val.window_width = winWidth;
+		    	}
+		    	
 		    	
 		    	var popUrl = "/admin/access/archiver/api/dl.alns?ar=" + val.archive_page_id;
 		    	var options = "toolbar=no,location=no," +

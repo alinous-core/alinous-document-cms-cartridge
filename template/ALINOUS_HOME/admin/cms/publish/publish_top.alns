@@ -28,10 +28,18 @@ function Publish.previewTop($SESSION, $template_top_id, $params)
 	// insert header
 	$headers = Publish.getInlineTemplateHeaders($params.cms_page_id, false, $template_primitive_id);
 	
-	$css = "<style>\n<!--\n" + Publish.joinArray(@headers.css) + "\n-->\n</style>\n";
-	$js = "<script>\n<!--\n" + Publish.joinArray(@headers.js) + "\n-->\n</script>\n";
+	$css = Publish.joinArray(@headers.css);
+	if($css != ""){
+		$css = "<style>\n<!--\n" + $css + "\n-->\n</style>\n";
+	}
+	
+	$js = Publish.joinArray(@headers.js);
+	if($js != ""){
+		$js =  "<script>\n<!--\n" + Publish.joinArray(@headers.js) + "\n-->\n</script>\n";
+	}
+		
 	$header = Publish.joinArray(@headers.header);
-	$total = $header + "\n" + $css + "\n" + $js + "\n";
+	$total = $header + $css + $js + $headers.page_addtional_code + "\n";
 	
 	$html = File.readAllText($tmpFile, "utf-8");
 	$offset = String.indexOf($html, "</head>", 0);

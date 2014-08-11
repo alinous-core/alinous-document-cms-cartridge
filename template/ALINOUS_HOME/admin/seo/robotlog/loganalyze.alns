@@ -51,12 +51,12 @@ function AccessLog.readConfig()
 function AccessLog.analyze($logline, $config)
 {
 	@logArray = AccessLogLineReader.parseLine($logline);
-	
+	/*
 	$isRobot = AccessLog.isRobot(@logArray, $config);
 	if(!$isRobot){
 		return 0;
 	}
-	
+	*/
 	$remoteHost = $logArray[$config.remoteHost];
 	$remoteHost = AccessLog.resolveIp($remoteHost);
 	$access_time =  $logArray[$config.time];
@@ -94,7 +94,10 @@ function AccessLog.analyze($logline, $config)
 	$user_agent = "";
 	if($config.userAgent >= 0){
 		$user_agent = $logArray[$config.userAgent];
-		$robot_type = AccessLog.getRobotType($user_agent);
+		$rb = AccessLog.getRobotType($user_agent);
+		if($rb != null){
+			$robot_type = AccessLog.getRobotType($user_agent);
+		}
 	}
 	
 	$lock = $remoteHost + "-" + $access_time + "-" + $path;

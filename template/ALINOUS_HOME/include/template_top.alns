@@ -57,8 +57,22 @@ function TopTmpl.makeHtml($savePath, $tmpl, $gencode)
 		}
 	}
 	
-	$autoHeader = "<style>\n<!--\n" + $tmpl.code_css + "\n" + $innerCss + "\n-->\n</style>\n"
-			+ "<script>\n<!--\n" + $tmpl.code_js + "\n" + $innerJs + "\n-->\n</script>\n";
+	$code_css = "";
+	if($tmpl.code_css != ""){
+		$code_css = "<style>\n<!--\n" + $tmpl.code_css + "\n" + $innerCss + "\n-->\n</style>\n";
+	}
+	$code_js = "";
+	if($tmpl.code_js != ""){
+		$code_js = $tmpl.code_js + "\n";
+	}
+	if($innerJs != ""){
+		$code_js = $code_js + $innerJs;
+	}
+	if($code_js != ""){
+		$code_js = $code_js + "\n-->\n</script>\n";
+	}
+	
+	$autoHeader = $code_css + $code_js;
 	
 	// autoBody
 	$innerParts = TopTmpl.renderInnerParts($tmpl.template_top_id, $gencode);

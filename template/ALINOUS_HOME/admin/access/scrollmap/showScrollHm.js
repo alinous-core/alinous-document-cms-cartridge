@@ -3,6 +3,29 @@ var AlinousScrollHmViewer = {
 	hm_scroll_hm_id: 0,
 	playWindow: null,
 	show : function(hm_scroll_hm_id){
+	
+		var getBrowserHeight = function () {
+			if(window.innerHeight){
+				return window.innerHeight;
+			}else if(document.documentElement && document.documentElement.clientHeight != 0 ){
+				return document.documentElement.clientHeight;
+			}else if (document.body){
+				return document.body.clientHeight;
+			}		
+			return 0;
+		};
+		
+		var getBrowserWidth = function () {
+			if(window.innerWidth ){
+				return window.innerWidth ;
+			}else if(document.documentElement && document.documentElement.clientWidth  != 0 ){
+				return document.documentElement.clientWidth ;
+			}else if (document.body){
+				return document.body.clientWidth ;
+			}		
+			return 0;
+		};
+		
 		var data = {hm_scroll_hm_id: hm_scroll_hm_id};
 		
 		$.ajax({
@@ -15,8 +38,15 @@ var AlinousScrollHmViewer = {
 			{
 				var val = json[0];
 				
-				val.window_width = 800;
-		    	val.window_height = 600;
+				var winWidth = getBrowserWidth();
+				
+				val.window_width = val.imageWidth;
+		    	val.window_height = getBrowserHeight();
+		    	
+		    	if(val.window_width > winWidth){
+		    		val.window_width = winWidth;
+		    	}
+		    	
 		    	
 		    	var popUrl = "/admin/access/archiver/api/dl.alns?ar=" + val.archive_page_id;
 		    	

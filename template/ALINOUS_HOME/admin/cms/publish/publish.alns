@@ -92,7 +92,7 @@ function Publish.doPublish($template_top_id, $cms_page_id, $fileExt, $contextRoo
 	$css = "<style>\n<!--\n" + Publish.joinArray(@headers.css) + "\n-->\n</style>\n";
 	$js = "<script>\n<!--\n" + Publish.joinArray(@headers.js) + "\n-->\n</script>\n";
 	$header = Publish.joinArray(@headers.header);
-	$total = $header + "\n" + $css + "\n" + $js + "\n";
+	$total = $header + $css + $js + $headers.page_addtional_code + "\n";
 	
 	$html = File.readAllText($metaFile, "utf-8");
 	$offset = String.indexOf($html, "</head>", 0);
