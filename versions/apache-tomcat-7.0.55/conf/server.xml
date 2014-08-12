@@ -70,7 +70,7 @@
     <Connector address="${OPENSHIFT_ALINOUS_IP}"
                port="${OPENSHIFT_ALINOUS_HTTP_PORT}" protocol="HTTP/1.1"
                connectionTimeout="20000"
-               redirectPort="8443" />
+               redirectPort="443" />
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"
