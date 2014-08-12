@@ -84,7 +84,16 @@ function start() {
 
     ${SHELL_DIR}/startup.sh > ${OPENSHIFT_ALINOUS_DIR}logs/tomcat.log 2>&1 &
     
-    ishttpup
+    let count=0
+    while [ ${count} -lt 24 ]
+    do
+        if ishttpup ; then
+            echo "Found ${OPENSHIFT_ALINOUS_IP}:${OPENSHIFT_ALINOUS_HTTP_PORT} ready"
+            break
+        fi
+        let count=${count}+1
+        sleep 2
+    done
     
     curl -k -X GET https://${OPENSHIFT_ALINOUS_IP}:${OPENSHIFT_ALINOUS_HTTP_PORT}/install/install.html
 }
