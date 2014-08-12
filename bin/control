@@ -95,7 +95,8 @@ function start() {
         sleep 2
     done
     
-    curl -k -X GET http://${OPENSHIFT_ALINOUS_IP}:${OPENSHIFT_ALINOUS_HTTP_PORT}/install/install.html
+    # curl -k -X GET http://${OPENSHIFT_ALINOUS_IP}:${OPENSHIFT_ALINOUS_HTTP_PORT}/install/install.html
+    curl -k -X GET https://${OPENSHIFT_APP_NAME}-${OPENSHIFT_NAMESPACE}.rhcloud.com/install/install.html
 }
 
 function stop() {
