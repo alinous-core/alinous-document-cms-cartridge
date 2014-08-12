@@ -20,6 +20,21 @@ killtree() {
     kill -9 ${_pid}
 }
 
+# Check if the server http port is up
+function ishttpup() {
+    let count=0
+    while [ ${count} -lt 24 ]
+    do
+        if /usr/sbin/lsof -P -n -i "@${OPENSHIFT_ALINOUS_IP}:${OPENSHIFT_ALINOUS_HTTP_PORT}" | grep "(LISTEN)" > /dev/null; then
+            echo "Found ${OPENSHIFT_ALINOUS_IP}:${OPENSHIFT_ALINOUS_HTTP_PORT} listening port"
+            return 0
+        fi
+        let count=${count}+1
+        sleep 2
+    done
+    return 1
+}
+
 function status() {
     if ! isrunning; then
         client_result "The application is either stopped or inaccessible"

@@ -44,7 +44,7 @@ Endpoints:
     Mappings:
       - Frontend:      ""
         Backend:       ""
-        Options:       { "websocket": 1}
+        Options:       { "websocket": false}
       - Frontend:      "/health"
         Backend:       "/$OPENSHIFT_REPO_DIR/.openshift/configuration/health.html"
         Options:       { "file": 1}
