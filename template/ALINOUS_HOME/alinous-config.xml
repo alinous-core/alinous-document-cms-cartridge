@@ -6,15 +6,15 @@
 	</system>
 
 	<datasources id="pgsrc" class="org.alinous.plugin.postgres.PostgreSQLDataSource">
-		<connect>jdbc:postgresql://localhost:5432/apcms</connect>
-		<user>postgres</user>
-		<pass>postgres</pass>
+		<connect>java:comp/env/jdbc/PostgreSQLDS</connect>
+		<user>admin2krivyc</user>
+		<pass>ACedWgUqZXe-</pass>
 	</datasources>
 
 	<datasources id="pgapps" class="org.alinous.plugin.postgres.PostgreSQLDataSource">
-		<connect>jdbc:postgresql://localhost:5432/apcms</connect>
-		<user>postgres</user>
-		<pass>postgres</pass>
+		<connect>java:comp/env/jdbc/PostgreSQLDS</connect>
+		<user>admin2krivyc</user>
+		<pass>ACedWgUqZXe-</pass>
 	</datasources>
 	
 	
