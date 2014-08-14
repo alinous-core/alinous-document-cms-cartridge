@@ -87,6 +87,7 @@ function backup($IN, $SESSION)
 	backupContents($IN, $SESSION, $backupDir, "wmc_robot_ip_domain");
 	backupContents($IN, $SESSION, $backupDir, "wmil_internal_link_file");
 	backupContents($IN, $SESSION, $backupDir, "wmil_internal_link");
+	backupContents($IN, $SESSION, $backupDir, "wmc_user_access");
 	
 	
 	// archiveddl.alns
@@ -183,7 +184,7 @@ function recover($tmpFile, $outDir)
 	recoverTable($outDir, "wmc_robot_ip_domain");
 	recoverTable($outDir, "wmil_internal_link_file");
 	recoverTable($outDir, "wmil_internal_link");
-	
+	recoverTable($outDir, "wmc_user_access");
 	
 	// archiveddl.alns
 	recoverTable($outDir, "archive_page");

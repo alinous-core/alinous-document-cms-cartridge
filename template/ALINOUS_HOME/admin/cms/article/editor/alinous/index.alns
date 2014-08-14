@@ -32,13 +32,8 @@ function innerPrimitives($IN, $SESSION)
 		ON
 			template_primitive.node_id = tree_model.node_id
 	WHERE
+		tree_model.tree_id = 'primitive' AND
 		template_primitive.is_embeded = 1;
-	
-	for($i = 0; $i < Array.size(@p); $i++){
-		
-		
-	}
-	
 	
 	return @p;
 }

@@ -99,6 +99,22 @@ function WmcContentKeywords.ddl()
 		
 		PRIMARY KEY(internal_link_file_id, target_page)
 	);
+	
+	// user access
+	CREATE TABLE wmc_user_access(
+		remote_host varchar(255) not null default '',
+		access_time varchar(255) not null default '',
+		
+		path varchar(255) not null default '',
+		protocol varchar(255) not null default '',
+		method varchar(255) not null default '',
+		bytes int not null default 0,
+		referer text not null default '',
+		response_status varchar(255) not null default '',
+		user_agent varchar(255) not null default '',
+		
+		PRIMARY KEY(remote_host, access_time, path)
+	);
 }
 
 function WmcContentKeywords.makeItems()

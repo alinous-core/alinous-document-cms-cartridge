@@ -37,6 +37,21 @@ function initParams($IN, $SESSION)
 {
 	$currentTime = Timestamp.now();
 	
+	if($IN.end_date == null){
+		SELECT * INTO wmc_robot_access
+		FROM
+			wmc_robot_access
+		ORDER BY wmc_robot_access.access_time DESC
+		LIMIT 1;
+		if(Array.size(@wmc_robot_access) > 0){
+			$IN.end_date = Timestamp.format($wmc_robot_access[0].access_time, "MM'/'dd'/'yyyy");
+			$endTm = $wmc_robot_access[0].access_time;
+		}elsE{
+			$IN.end_date = Timestamp.format($currentTime, "MM'/'dd'/'yyyy");
+			$endTm = $currentTime;
+		}
+	}
+
 	if($IN.start_date == null){
 		SELECT * INTO wmc_robot_access
 		FROM
@@ -46,20 +61,13 @@ function initParams($IN, $SESSION)
 		
 		if(Array.size(@wmc_robot_access) > 0){
 			$IN.start_date = Timestamp.format($wmc_robot_access[0].access_time, "MM'/'dd'/'yyyy");
+			
+			$lastMonth = Timestamp.add($endTm, -1, "MONTH");
+			if(Timestamp.before($wmc_robot_access[0].access_time, $lastMonth)){
+				$IN.start_date = Timestamp.format($lastMonth, "MM'/'dd'/'yyyy");
+			}
 		}else{
 			$IN.start_date = Timestamp.format($currentTime, "MM'/'dd'/'yyyy");
-		}
-	}
-	if($IN.end_date == null){
-		SELECT * INTO wmc_robot_access
-		FROM
-			wmc_robot_access
-		ORDER BY wmc_robot_access.access_time DESC
-		LIMIT 1;
-		if(Array.size(@wmc_robot_access) > 0){
-			$IN.end_date = Timestamp.format($wmc_robot_access[0].access_time, "MM'/'dd'/'yyyy");
-		}elsE{
-			$IN.end_date = Timestamp.format($currentTime, "MM'/'dd'/'yyyy");
 		}
 	}
 }

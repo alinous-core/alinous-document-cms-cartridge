@@ -18,9 +18,6 @@ function AccessLog.analyze($logline, $config)
 	@logArray = AccessLogLineReader.parseLine($logline);
 	
 	$isRobot = AccessLog.isRobot(@logArray, $config);
-	if(!$isRobot){
-		return 0;
-	}
 	
 	$remoteHost = $logArray[$config.remoteHost];
 	$remoteHost = AccessLog.resolveIp($remoteHost);
@@ -63,6 +60,42 @@ function AccessLog.analyze($logline, $config)
 		if($rb != null){
 			$robot_type = AccessLog.getRobotType($user_agent);
 		}
+	}
+	
+	if(!$isRobot){
+		if(String.endsWith($path, ".html") == false && String.endsWith($path, "/") == false){
+			return 0;
+		}
+		if(String.startsWith($path, "/admin/")){
+			return 0;
+		}
+		
+		BEGIN;
+		
+		INSERT INTO wmc_user_access(
+			remote_host,
+			access_time,
+			path,
+			protocol,
+			method,
+			bytes,
+			referer,
+			response_status,
+			user_agent
+		)VALUES(
+			$remoteHost,
+			$access_time,
+			$path,
+			$protocol,
+			$method,
+			$bytes,
+			$referer,
+			$response_status,
+			$user_agent
+		);
+		
+		COMMIT;
+		return 0;
 	}
 	
 	$lock = $remoteHost + "-" + $access_time + "-" + $path;
