@@ -33,7 +33,7 @@ function uploadSitemap($IN, $SESSION)
 	$size = Array.size(@domXml);
 	for($i = 0; $i < $size; $i++){
 		if($domXml[$i] == "urlset"){
-			handleUrlset($domXml[$i], $sitemapUrl);
+			handleUrlset($domXml[$i], $IN.sitemapUrl);
 		}
 	}
 	

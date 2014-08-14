@@ -63,7 +63,21 @@ function Rss.pubhubPush($rss_setting_id)
 
 function Rss.doPubhubsubbub($rss_setting, $hubsUrl)
 {
-	$rssUrl = "http:/" + Rss.getFilePath($rss_setting.rss_setting_id);
+	SELECT * INTO sitemap_setting
+	FROM
+		sitemap_setting
+	WHERE
+		sitemap_setting.site_path = $rss_setting.site_path;
+	
+	if(Array.size(@sitemap_setting) == 0){
+		return 0;
+	}
+	if(String.endsWith($sitemap_setting[0].site_domain, "/")){
+		$endIndex = String.length($sitemap_setting[0].site_domain) - 1;
+		$sitemap_setting[0].site_domain = String.subString($sitemap_setting[0].site_domain, 0, $endIndex);
+	}
+	
+	$rssUrl = $sitemap_setting[0].site_domain + "/" + $rss_setting.feed_name + ".rss";
 	
 	$ret = Pubsubhubbub.publish($hubsUrl, $rssUrl);
 	

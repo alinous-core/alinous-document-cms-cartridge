@@ -16,7 +16,7 @@ function UrlParse.getPath($url)
 		
 		return String.subString($withoutScheme, $domainLength, $len);
 	}
-	else if(String.startsWith($str, "https://")){
+	else if(String.startsWith($url, "https://")){
 		$withoutScheme = String.subString($url, 8, $len);
 		@fragments = String.split($withoutScheme, "/");
 		
@@ -38,7 +38,7 @@ function UrlParse.getDomain($url)
 		@fragments = String.split($withoutScheme, "/");
 		return $fragments[0];
 	}
-	else if(String.startsWith($str, "https://")){
+	else if(String.startsWith($url, "https://")){
 		$withoutScheme = String.subString($url, 8, $len);
 		
 		@fragments = String.split($withoutScheme, "/");
