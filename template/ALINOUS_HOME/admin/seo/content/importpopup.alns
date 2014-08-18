@@ -80,7 +80,11 @@ function doUploadCsv($IN, $SESSION)
 	
 	@FIELDS = Csv.readLine($tmpFile);
 	while(Array.size(@FIELDS) > 0){
-		handleOneRecord($fileName, $fromName, @FIELDS);
+		try{
+			handleOneRecord($fileName, $fromName, @FIELDS);
+		}catch($e){
+		
+		}
 		
 		ProgressJob.progress(1, "importcontents");
 		
@@ -155,7 +159,7 @@ function getPath($url)
 		
 		return String.subString($withoutScheme, $domainLength, $len);
 	}
-	else if(String.startsWith($str, "https://")){
+	else if(String.startsWith($url, "https://")){
 		$withoutScheme = String.subString($url, 8, $len);
 		@fragments = String.split($withoutScheme, "/");
 		
@@ -177,7 +181,7 @@ function getDomain($url)
 		@fragments = String.split($withoutScheme, "/");
 		return $fragments[0];
 	}
-	else if(String.startsWith($str, "https://")){
+	else if(String.startsWith($url, "https://")){
 		$withoutScheme = String.subString($url, 8, $len);
 		
 		@fragments = String.split($withoutScheme, "/");
