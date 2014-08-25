@@ -53,6 +53,7 @@ $(function() {
 	var editorAlinous = CodeMirror.fromTextArea(document.getElementById("code_alinous"),
 	{
 		mode: "alinous",
+		extraKeys: {"Ctrl-Space": "autocomplete"},
 		lineNumbers: true,
 		gutters: ["CodeMirror-linenumbers", "breakpoints"]
 	});

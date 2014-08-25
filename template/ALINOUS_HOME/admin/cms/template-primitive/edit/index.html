@@ -64,8 +64,9 @@ $(function() {
 	
 	editorAlinous = CodeMirror.fromTextArea(document.getElementById("code_alinous"),
 	{
-		mode: "alinous",
+		mode: {name: "alinous", globalVars: true},
 		lineNumbers: true,
+		extraKeys: {"Ctrl-Space": "autocomplete"},
 		gutters: ["CodeMirror-linenumbers", "breakpoints"]
 	});
 	editorAlinous.on("gutterClick", function(cm, n) {
@@ -101,6 +102,7 @@ $(function() {
 	{
 		mode: "alinous",
 		lineNumbers: true,
+		extraKeys: {"Ctrl-Space": "autocomplete"},
 		gutters: ["CodeMirror-linenumbers", "breakpoints"]
 	});
 	editorAlinousPaging.on("gutterClick", function(cm, n) {
