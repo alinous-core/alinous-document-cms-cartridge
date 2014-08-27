@@ -4,7 +4,78 @@ include("/include/template_top.alns");
 include("/admin/cms/publish/publish_inline.alns");
 include("/include/template_primitive.alns");
 
+include("/include/rss.alns");
+
 $path = $args[0];
+
+/*
+if(String.endsWith($path, "sitemap.xml")){
+	@pathel = String.split($path, "/");
+	
+	$site_path = "/" + $pathel[1];
+	
+	SELECT * INTO sitemap_setting
+	FROM
+		sitemap_setting
+	WHERE
+		sitemap_setting.site_path = $site_path;
+	
+	if(Array.size(@sitemap_setting) == 0){
+		return 0;
+	}
+	
+	
+	$sitemapFile = "/html" + $path;
+	
+	if(!File.exists($sitemapFile)){
+		SiteSetting.generateSitemap($site_path);
+		return 0;
+	}
+	
+	$lastModified = File.getTimestamp($sitemapFile);
+	if(Timestamp.after($sitemap_setting[0].update_time, $lastModified)){
+		SiteSetting.generateSitemap($site_path);
+		return 0;
+	}
+	
+	return 0;
+}*/
+
+if(String.endsWith($path, ".rss")){
+	@pathel = String.split($path, "/");
+	
+	$idx = Array.size(@pathel);
+	$rss = $pathel[$idx - 1];
+	
+	@pathel2 = String.split($rss, "\.");
+	$site_path = "/" + $pathel[1];
+	
+	SELECT * INTO rss_setting
+	FROM
+		rss_setting
+	WHERE
+		rss_setting.site_path = $site_path AND
+		rss_setting.feed_name = $pathel2[0];
+	
+	if(Array.size(@rss_setting) == 0){
+		return 0;
+	}
+	
+	$rssFile = "/html" + $path;
+	
+	if(!File.exists($rssFile)){
+		Rss.publish($rss_setting[0].rss_setting_id);
+		return 0;
+	}
+	
+	$lastModified = File.getTimestamp($rssFile);
+	if(Timestamp.after($rss_setting[0].update_time, $lastModified)){
+		Rss.publish($rss_setting[0].rss_setting_id);
+		return 0;
+	}
+	
+	return 0;
+}
 
 
 if(String.endsWith($path, ".html")){

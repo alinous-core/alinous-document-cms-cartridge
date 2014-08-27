@@ -21,7 +21,7 @@ function Rss.publish($rss_setting_id)
 	File.makeDir($dir);
 	
 	$httpParams.rss_setting_id = $rss_setting_id;
-	$templetePath = "/admin/cms/rss-sitemap/rss-template/rsstemplate.rss";
+	$templetePath = "/include/rss-template/rsstemplate.rss";
 	
 	Html.outputHtml($templetePath, $outPath, $httpParams, false, "utf-8");
 	
@@ -37,6 +37,19 @@ function Rss.pubhubPushAll()
 	for($i = 0; $i < $size; $i++){
 		Rss.pubhubPush($rss_setting[$i].rss_setting_id);
 	}
+}
+
+function Rss.updateTime($site_path)
+{
+	BEGIN;
+	
+	UPDATE rss_setting
+	SET
+		update_time = now()
+	WHERE
+		rss_setting.site_path = $site_path;
+	
+	COMMIT;
 }
 
 function Rss.pubhubPush($rss_setting_id)

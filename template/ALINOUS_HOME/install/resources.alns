@@ -67,6 +67,8 @@ function PageResource.ddl()
 		
 		resource_binary text not null default '',
 		
+		update_time timestamp not null default now(),
+		
 		PRIMARY KEY (cms_resource_id)
 	);
 	

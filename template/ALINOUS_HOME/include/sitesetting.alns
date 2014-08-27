@@ -87,6 +87,7 @@ function SiteSetting.generateSitemap($site)
 		$sitemapDomain = "";
 	}
 	
+	$now = Timestamp.now();
 	
 	$likeStr = $site + "/%";
 	SELECT cms_page.cms_page_id, cms_page.template_top_id
@@ -143,5 +144,15 @@ function SiteSetting.generateSitemap($site)
 	
 	$outFile = "/html_resource/page" + $site + "/sitemap.xml";
 	File.putText($outFile, $xml, "utf-8");
+	
+	BEGIN;
+	
+	UPDATE sitemap_setting
+	SET
+		update_time = $now
+	WHERE
+		sitemap_setting.site_path = $site;
+	
+	COMMIT;
 }
 
