@@ -1,45 +1,13 @@
 
 include("/admin/cms/publish/publish.alns");
 include("/include/template_top.alns");
+include("/include/template_container.alns");
 include("/admin/cms/publish/publish_inline.alns");
 include("/include/template_primitive.alns");
 
 include("/include/rss.alns");
 
 $path = $args[0];
-
-/*
-if(String.endsWith($path, "sitemap.xml")){
-	@pathel = String.split($path, "/");
-	
-	$site_path = "/" + $pathel[1];
-	
-	SELECT * INTO sitemap_setting
-	FROM
-		sitemap_setting
-	WHERE
-		sitemap_setting.site_path = $site_path;
-	
-	if(Array.size(@sitemap_setting) == 0){
-		return 0;
-	}
-	
-	
-	$sitemapFile = "/html" + $path;
-	
-	if(!File.exists($sitemapFile)){
-		SiteSetting.generateSitemap($site_path);
-		return 0;
-	}
-	
-	$lastModified = File.getTimestamp($sitemapFile);
-	if(Timestamp.after($sitemap_setting[0].update_time, $lastModified)){
-		SiteSetting.generateSitemap($site_path);
-		return 0;
-	}
-	
-	return 0;
-}*/
 
 if(String.endsWith($path, ".rss")){
 	@pathel = String.split($path, "/");
@@ -179,6 +147,7 @@ function lazyPublish($cms_page, $path, $page)
 	$contextRoot = "";
 	
 	$template_top_id = Publish.getTopTemplateId($cms_page.cms_page_id);
+	TopTmpl.sync($template_top_id, "");
 	
 	Publish.doPublish($template_top_id, $cms_page.cms_page_id, $fileExt, $contextRoot, $page);
 }

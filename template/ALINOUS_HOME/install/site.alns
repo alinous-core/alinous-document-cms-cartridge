@@ -71,6 +71,8 @@ function Site.ddl()
 		file_name varchar(255),
 		file_text text not null default '',
 		
+		update_time timestamp not null default now(),
+		
 		PRIMARY KEY(site_resource_id)
 	);
 	

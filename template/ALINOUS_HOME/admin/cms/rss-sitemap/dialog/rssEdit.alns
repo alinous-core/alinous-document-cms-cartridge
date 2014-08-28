@@ -64,7 +64,8 @@ function updateRss($IN, $SESSION)
 		include_top = $include_top,
 		pubsub = $IN.pubsub,
 		description = $IN.description,
-		copyright = $IN.copyright
+		copyright = $IN.copyright,
+		update_time = now()
 	WHERE
 		rss_setting.rss_setting_id = $IN.rss_setting_id;
 	

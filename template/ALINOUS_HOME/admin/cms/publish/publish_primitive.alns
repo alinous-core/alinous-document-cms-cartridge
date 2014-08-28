@@ -17,6 +17,7 @@ function Publish.previewPrimitive($SESSION, $template_primitive_id, $params)
 	File.putText($tmpAlnsFile, "return 0;", "utf-8");
 	
 	
+	
 	// conbine with article
 	$templatePath = PrimitiveTmpl.getPrimitiveDirPath($template_primitive_id);
 	$htmlPath = $templatePath + "indexpreview.html";

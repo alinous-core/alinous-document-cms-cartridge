@@ -17,6 +17,7 @@ function Publish.publishPage($cms_page_id)
 	$fileExt = "";
 	$contextRoot = "";
 	for($i = 0; $i < $pages; $i++){
+		TopTmpl.sync($template_top_id, "");
 		Publish.doPublish($template_top_id, $cms_page_id, $fileExt, $contextRoot, $i);
 	}
 	

@@ -161,7 +161,8 @@ function updateRobotsTxt($IN, $SESSION)
 	
 	UPDATE site_resource
 	SET
-		file_text = $IN.robot_file_text
+		file_text = $IN.robot_file_text,
+		update_time = now()
 	WHERE
 		site_resource.site_path = $IN.site AND
 		site_resource.file_name = 'robots.txt';

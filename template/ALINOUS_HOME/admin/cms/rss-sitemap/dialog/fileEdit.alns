@@ -27,7 +27,8 @@ function updateFile($IN, $SESSION)
 	UPDATE site_resource
 	SET
 		file_name = $IN.file_name,
-		file_text = $IN.file_text
+		file_text = $IN.file_text,
+		update_time = now()
 	WHERE
 		site_resource.site_resource_id = $IN.site_resource_id;
 	
