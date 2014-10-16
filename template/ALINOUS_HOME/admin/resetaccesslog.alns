@@ -1,0 +1,17 @@
+
+// http://localhost:8080/admin/resetaccesslog.alns
+
+
+BEGIN;
+
+DELETE FROM wmc_user_access;
+DELETE FROM wmc_robot_access;
+
+DELETE FROM serial
+WHERE
+	serial.serial_id IN ('wmc_user_access', 'wmc_robot_access');
+
+COMMIT;
+
+return 0;
+

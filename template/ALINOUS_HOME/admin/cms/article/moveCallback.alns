@@ -11,5 +11,5 @@ function deletePage($IN, $SESSION)
 {
 	BEGIN;
 	CmsPage.removePage($IN.nodeId);
-	COMMIT;
+	COMMIT;	
 }
