@@ -109,6 +109,7 @@ function applyTemplate($IN, $SESSION)
 		SET
 			template_top_id = $IN.apply_template_top_id,
 			second_template_top_id = $IN.apply_second_template_top_id,
+			second_template_context = $IN.apply_second_template_context,
 			dirty = now()
 		WHERE
 			cms_page.cms_page_id = $IN.cms_page_ids[$i];

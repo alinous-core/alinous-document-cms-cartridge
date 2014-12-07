@@ -11,6 +11,12 @@ function PageTree.ddl()
 	BEGIN;
 	
 	CREATE TABLE tree_model(
+		/*
+			cms
+			container
+			primitive
+			tag
+		*/
 		tree_id varchar(255),
 		
 		node_id int not null,

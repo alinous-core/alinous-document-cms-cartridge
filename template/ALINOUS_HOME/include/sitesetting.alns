@@ -2,8 +2,8 @@
 include("/include/sitesetting.alns");
 */
 
-include("/include/template_primitive.alns");
-include("/include/template_container.alns");
+// include("/include/template_primitive.alns");
+// include("/include/template_container.alns");
 include("/admin/cms/publish/publish.alns");
 include("/include/treemodel.alns");
 
@@ -50,6 +50,37 @@ function SiteSetting.sync()
 			+  $site_setting[$i].force_https
 			+ "\n";	
 		
+		$text = $text + $line;
+	}
+	
+	File.putText($filePath, $text, "utf-8");	
+}
+
+function SiteSetting.syncSp()
+{
+	SELECT * INTO site_mobile_setting
+	FROM
+		site_mobile_setting
+	ORDER BY site_mobile_setting.template_use;
+	
+	$filePath = "/log/sites/mobilesites.txt";
+	File.makeDir("/log/sites/");
+	
+	$text = "";
+	$size = Array.size(@site_mobile_setting);
+	for($i = 0; $i < $size; $i++){
+		$line = $site_mobile_setting[$i].site_domain
+			+ ","
+			+  $site_mobile_setting[$i].site_path
+			+ ","
+			+  $site_mobile_setting[$i].src_site_domain
+			+ ","
+			+  $site_mobile_setting[$i].template_use
+			+ ","
+			+  $site_mobile_setting[$i].use_context
+			+ ","
+			+  $site_mobile_setting[$i].force_https
+			+ "\n";
 		$text = $text + $line;
 	}
 	
@@ -111,7 +142,7 @@ function SiteSetting.generateSitemap($site)
 	
 	$size = Array.size(@cms_page);
 	for($i = 0; $i < $size; $i++){
-		$pages = Publish.getPaging($cms_page[$i].template_top_id, $cms_page[$i].cms_page_id, "");
+		/*$pages = Publish.getPaging($cms_page[$i].template_top_id, $cms_page[$i].cms_page_id, "");
 		if($pages > 1){
 			for($p = 0; $p < $pages; $p++){	
 				$fileName = Publish.getPublishPageUrlPath($cms_page[$i].cms_page_id);
@@ -129,7 +160,7 @@ function SiteSetting.generateSitemap($site)
 			
 			
 			continue;
-		}
+		}*/
 		
 		// not paging
 		$fileName = Publish.getPublishPageUrlPath($cms_page[$i].cms_page_id);

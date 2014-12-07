@@ -1,6 +1,6 @@
 
-include("/include/template_primitive.alns");
-include("/include/template_container.alns");
+//include("/include/template_primitive.alns");
+//include("/include/template_container.alns");
 include("/admin/cms/publish/publish.alns");
 include("/include/sitesetting.alns");
 include("/include/serialutils.alns");

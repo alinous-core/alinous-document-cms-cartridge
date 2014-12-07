@@ -72,6 +72,7 @@ function backup($IN, $SESSION)
 	
 	// site.alns
 	backupContents($IN, $SESSION, $backupDir, "site_setting");
+	backupContents($IN, $SESSION, $backupDir, "site_mobile_setting");
 	backupContents($IN, $SESSION, $backupDir, "sitemap_setting");
 	backupContents($IN, $SESSION, $backupDir, "sitemap_page_type");
 	backupContents($IN, $SESSION, $backupDir, "rss_setting");
@@ -169,6 +170,7 @@ function recover($tmpFile, $outDir)
 	
 	// site.alns
 	recoverTable($outDir, "site_setting");
+	recoverTable($outDir, "site_mobile_setting");
 	recoverTable($outDir, "sitemap_setting");
 	recoverTable($outDir, "sitemap_page_type");
 	recoverTable($outDir, "rss_setting");
@@ -220,6 +222,7 @@ function recover($tmpFile, $outDir)
 	
 	// forward and redirect
 	SiteSetting.sync();
+	SiteSetting.syncSp();
 	Redirects.sync(null);
 	
 	// sitemap, rss and robots txt
