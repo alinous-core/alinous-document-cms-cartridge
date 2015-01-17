@@ -60,6 +60,22 @@ if(Array.size(@tree_model) == 0){
 		tree_model.page_path = $pagePath;
 	
 	if(Array.size(@tree_model) == 0){
+		// check redirect
+		$likeStr = $strPath + "%";
+		
+		SELECT * INTO http_path_match
+		FROM
+			http_path_match
+		WHERE
+			http_path_match.site_path = $siteDomainPath AND
+			// http_path_match.match_type = 'file-match' AND
+			http_path_match.match_path LIKE $likeStr;
+		if(Array.size(@http_path_match) > 0){
+			$obj.path = $ctx;
+			$obj.templateId = 0;
+			return $obj;
+		}
+		
 		$obj.path = "";
 		$obj.templateId = 0;
 		return $obj;

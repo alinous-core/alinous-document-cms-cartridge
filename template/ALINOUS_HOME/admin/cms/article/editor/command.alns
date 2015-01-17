@@ -251,7 +251,7 @@ function Editor.makeDirty($nodeId, $effect_range)
 			SELECT node_id FROM tree_model
 			WHERE
 				tree_model.tree_id = 'cms' AND
-				tree_model.page_path LIKE $likeStr
+				(tree_model.page_path LIKE $likeStr OR tree_model.page_path = $site)
 		);
 	
 	COMMIT;
@@ -291,6 +291,7 @@ function Editor.update($IN, $SESSION)
 	UPDATE cms_page
 	SET
 		page_status = $page_status,
+		page_type = $IN.page_type,
 		
 		template_top_id = $IN.template_top_id,
 		second_template_top_id = $IN.second_template_top_id,

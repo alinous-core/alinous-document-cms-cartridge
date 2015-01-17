@@ -2,8 +2,8 @@
 include("/include/sitesetting.alns");
 */
 
-// include("/include/template_primitive.alns");
-// include("/include/template_container.alns");
+include("/include/template_primitive.alns");
+include("/include/template_container.alns");
 include("/admin/cms/publish/publish.alns");
 include("/include/treemodel.alns");
 
@@ -121,7 +121,7 @@ function SiteSetting.generateSitemap($site)
 	$now = Timestamp.now();
 	
 	$likeStr = $site + "/%";
-	SELECT cms_page.cms_page_id, cms_page.template_top_id
+	SELECT cms_page.cms_page_id, cms_page.template_top_id, cms_page.updated_time
 	INTO cms_page
 	FROM
 		cms_page LEFT JOIN tree_model
@@ -139,43 +139,48 @@ function SiteSetting.generateSitemap($site)
 	
 	$xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
 			'<urlset xmlns="http://www.google.com/schemas/sitemap/0.84">';
+	$xml_pg = $xml;
 	
 	$size = Array.size(@cms_page);
 	for($i = 0; $i < $size; $i++){
-		/*$pages = Publish.getPaging($cms_page[$i].template_top_id, $cms_page[$i].cms_page_id, "");
+		$pages = Publish.getPaging($cms_page[$i].template_top_id, $cms_page[$i].cms_page_id, "");
 		if($pages > 1){
-			for($p = 0; $p < $pages; $p++){	
+			for($p = 1; $p < $pages; $p++){	
 				$fileName = Publish.getPublishPageUrlPath($cms_page[$i].cms_page_id);
-				$fileName = String.replaceNoRegex($fileName, "index.html", "");			
+				$fileName = String.replaceNoRegex($fileName, "index.html", "");
+				$lastmod = Timestamp.format($cms_page[$i].updated_time, "yyyy-MM-dd");	
 				
 				if($p > 0){
 					$fileName = $fileName + $p + "/";
 				}
 				
-				$xml = $xml + "\n	<url>\n";
-				$xml = $xml + "		<loc>" + $sitemapDomain +  $fileName + "</loc>\n";
-				$xml = $xml + "\n	</url>\n";
+				$xml_pg = $xml_pg + "\n	<url>\n";
+				$xml_pg = $xml_pg + "		<loc>" + $sitemapDomain +  $fileName + "</loc>\n";
+				$xml_pg = $xml_pg + "		<lastmod>" + $lastmod + "</lastmod>\n";
+				$xml_pg = $xml_pg + "\n	</url>\n";
 				
 			}
-			
-			
-			continue;
-		}*/
+		}
 		
 		// not paging
 		$fileName = Publish.getPublishPageUrlPath($cms_page[$i].cms_page_id);
 		$fileName = String.replaceNoRegex($fileName, "index.html", "");
-		
+		$lastmod = Timestamp.format($cms_page[$i].updated_time, "yyyy-MM-dd");
 		
 		$xml = $xml + "\n	<url>\n";
 		$xml = $xml + "		<loc>" + $sitemapDomain + $fileName + "</loc>\n";
+		$xml = $xml + "		<lastmod>" + $lastmod + "</lastmod>\n";
 		$xml = $xml + "\n	</url>\n";
 	}
 	
 	$xml = $xml + "\n</urlset>";
+	$xml_pg = $xml_pg + "\n</urlset>";
 	
 	$outFile = "/html_resource/page" + $site + "/sitemap.xml";
 	File.putText($outFile, $xml, "utf-8");
+	
+	$outFile = "/html_resource/page" + $site + "/sitemap-pg.xml";
+	File.putText($outFile, $xml_pg, "utf-8");
 	
 	BEGIN;
 	

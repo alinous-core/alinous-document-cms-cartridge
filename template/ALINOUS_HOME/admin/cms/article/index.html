@@ -95,7 +95,30 @@ $(function() {
 		}
 	});
 	
-	initJqTree();
+	var jscmd = $("#jscmd").val();
+	if(jscmd == "open"){
+		var selectedNodeId = $("#selectedNodeId").val();
+		var url = "/admin/cms/article/default_openlist.alns";
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data: {nodeId: selectedNodeId},
+			dataType: 'json',
+			success: function(data) {
+				for(var i = 0; i < data.length; i++){
+					JqTreeLazyState.addCookie(data[i].node_id, data[i].page_depth, treeId);
+				}			
+				
+				initJqTree();
+			},
+			error:function() {
+				alert('Error occur');
+			}
+		});
+	}
+	else{
+		initJqTree();
+	}
 	
 	
 	$( "#tabs" ).tabs({
@@ -227,7 +250,8 @@ function firstNode()
 				<input type="hidden" name="force_folder" value="" />
 				<input type="hidden" name="page_type" value="" />
 				
-				<input type="hidden" name="selectedNodeId" id="selectedNodeId" value="{$IN.selectedNodeId}" />				
+				<input type="hidden" name="selectedNodeId" id="selectedNodeId" value="{$IN.selectedNodeId}" />
+				<input type="hidden" name="jscmd" id="jscmd" value="{$IN.jscmd}" />	
 			</form>
 		</div>
 		<div>
@@ -243,7 +267,7 @@ function firstNode()
 				<input type="hidden" name="second_template_context" value="" />
 				
 				<input type="hidden" name="selectedNodeId" id="selectedNodeId" value="{$IN.selectedNodeId}" />
-			
+				<input type="hidden" name="jscmd" id="jscmd" value="{$IN.jscmd}" />
 			</form>
 		</div>
 	</div>

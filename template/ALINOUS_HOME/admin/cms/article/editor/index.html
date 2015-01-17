@@ -246,8 +246,27 @@ button {
 	</div>
 	<div id="tabs-4" order="3">
 		<p>
-			Input Addtional Html Header Code
+			Input Addtional Html Header Code. If want to capture mouse move, input "&lt;script src="/api/log.js"&gt;&lt;/script&gt;".
 		</p>
+		<div style="margin: 0;" alns:if="{BOOL($cms_page.page_status == 'draft')}">
+			<b>Draft Only</b>
+			<button type="button" onclick="saveByCmd('update')">Update Draft</button>
+			<button type="button" onclick="saveByCmd('publish')">Publish</button>
+		</div>
+		<div style="margin: 0;" alns:if="{BOOL($cms_page.page_status == 'published')}">
+			
+			<b>Published</b>
+			<button type="button" onclick="saveByCmd('update')">Update Draft</button>
+			<button type="button" onclick="saveByCmd('publish')">Publish</button>
+			<button type="button" onclick="saveByCmd('remove-publish')">Revert to Draft</button>
+		</div>
+		<div style="margin: 0;" alns:if="{BOOL($cms_page.page_status == 'published-with-draft')}">
+			<b>Published+Draft</b>
+			<button type="button" onclick="saveByCmd('update')">Update Draft</button>
+			<button type="button" onclick="saveByCmd('publish')">Publish</button>
+			<button type="button" onclick="saveByCmd('discard-draft')">Discard Draft</button>
+			<button type="button" onclick="saveByCmd('remove-publish')">Remove Published</button>
+		</div>
 		<textarea name="page_addtional_code" id="page_addtional_code" rows="8" style="width:100%;">{$cms_page.page_addtional_code}</textarea>
 	</div>
 	<div id="tabs-5" order="4">
@@ -421,6 +440,7 @@ button {
 <input type="hidden" name="group_code" value="" />
 <input type="hidden" name="cms_tag_id" value="" />
 <input type="hidden" name="cmd" value="" />
+
 
 <input type="hidden" name="selectedNodeId" value="{$IN.selectedNodeId}" />
 <input type="hidden" name="nicedit_cms_page_id" id="nicedit_cms_page_id" value="{$cms_page.cms_page_id }" />
