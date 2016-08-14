@@ -1,7 +1,16 @@
 alinous-document-cms-cartridge
 ==============================
 
-Openshift Cartridge for Document Management Software
+Openshift Cartridge for Document Management Software.
+This software is content management system for document website.
+For example
+- Technical Site
+- How to Site
+- Support Manual Site
+is suitable for this CMS.
+
+This CMS has flexible template engine to customize the design freely.
+
 
 Install
 ==========
